@@ -4,7 +4,7 @@ name: CI
 # Definition when the workflow should run
 on:
     workflow_dispatch:
-    push:
+    pull_request:
         branches:
             - main
         paths-ignore:
@@ -47,7 +47,7 @@ jobs:
 
         # Deploy source to scratch org
         - name: 'Push source to scratch org'
-          run: sfdx force:source:push
+          run: sfdx force:source:pushs
 
         # Assign permissionset
         - name: 'Assign permissionset to default user'
