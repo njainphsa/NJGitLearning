@@ -33,33 +33,11 @@ jobs:
 
             # Create scratch org
             - name: 'Create scratch org'
-              run: sfdx force:org:create -f config/project-scratch-def.json -a scratch-org -s -d 1
+              run: sfdx force:org:create -f ./GitLearning/config/project-scratch-def.json -a scratch-org -s -d 1
 
             # Deploy source to scratch org
             - name: 'Push source to scratch org'
               run: sfdx force:source:pushs
-
-            # Assign permissionset
-            - name: 'Assign permissionset to default user'
-              run: sfdx force:user:permset:assign -n recipes
-
-            # Import sample data
-            - name: 'Import sample data'
-              run: sfdx force:data:tree:import -p ./data/data-plan.json
-
-            # Run Apex tests in scratch org
-            - name: 'Run Apex tests'
-              run: sfdx force:apex:test:run -c -r human -d ./tests/apex -w 20
-
-            # Delete temporary test file that Codecov is unable to parse
-            - name: 'Delete coverage file (temporary step)'
-              run: rm ./tests/apex/test-result-707*-codecoverage.json
-
-            # Upload code coverage data
-            - name: 'Upload code coverage for Apex to Codecov.io'
-              uses: codecov/codecov-action@v2.0.2
-              with:
-                  flags: Apex
 
             # Housekeeping
             - name: 'Delete scratch org'
