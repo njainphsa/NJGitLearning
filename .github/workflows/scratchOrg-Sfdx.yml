@@ -28,19 +28,17 @@ jobs:
               uses: actions/checkout@v2
               
           # Store secret for dev hub
-            - name: 'Populate auth file with DEVHUB_SFDX_URL secret'
+            - name: "Populate auth file with DEVHUB_SFDX_URL secret"
               shell: bash
-              run: |
-                  echo ${{ secrets.DEVHUB_SFDX_URL}} > ./GitLearning/DEVHUB_SFDX_URL.txt
-                  secretFileSize=$(wc -c "./GitLearning/DEVHUB_SFDX_URL.txt" | awk '{print $1}')
-                  if [ $secretFileSize == 1 ]; then
-                      echo "Missing DEVHUB_SFDX_URL secret. Is this workflow running on a fork?";
-                  exit 1;
-                    fi
+              run: echo ${{ secrets.DEVHUB_SFDX_URL}} > ./DEVHUB_SFDX_URL.txt
 
-            # Authenticate dev hub
-            - name: 'Authenticate Dev Hub'
-              run: sfdx auth:sfdxurl:store -f ./GitLearning/DEVHUB_SFDX_URL.txt -a devhub -d
+          # Authenticate dev hub
+            - name: "Authenticate Dev Hub"
+              run: sfdx auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a devhub -d
+
+          # Remove auth file
+            - name: "Remove auth file"
+              run: rm -f ./DEVHUB_SFDX_URL.txt
 
             # Create scratch org
             - name: 'Create scratch org'
