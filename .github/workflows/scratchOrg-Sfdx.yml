@@ -32,7 +32,7 @@ jobs:
               shell: bash
               run: |
                   echo ${{ secrets.DEVHUB_SFDX_URL}} > ./GitLearning/DEVHUB_SFDX_URL.txt
-                  secretFileSize=$(wc -c "./DEVHUB_SFDX_URL.txt" | awk '{print $1}')
+                  secretFileSize=$(wc -c "./GitLearning/DEVHUB_SFDX_URL.txt" | awk '{print $1}')
                   if [ $secretFileSize == 1 ]; then
                       echo "Missing DEVHUB_SFDX_URL secret. Is this workflow running on a fork?";
                   exit 1;
