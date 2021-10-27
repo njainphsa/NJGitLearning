@@ -30,25 +30,25 @@ jobs:
           # Store secret for dev hub
             - name: "Populate auth file with DEVHUB_SFDX_URL secret"
               shell: bash
-              run: echo ${{ secrets.DEVHUB_SFDX_URL}} > ./DEVHUB_SFDX_URL.txt
+              run: echo ${{ secrets.TEST_URL}} > ./TEST_URL.txt
               
           # Print Secret
             - name: "Print Secret2"
               shell: bash
-              run: echo ${{ secrets.DEVHUB_SFDX_URL}}
+              run: echo ${{ secrets.TEST_URL}}
               
           # Print File
             - name: "Print Secret"
               shell: bash
-              run: echo "$(./DEVHUB_SFDX_URL.txt)"
+              run: echo "$(./TEST_URL.txt)"
 
           # Authenticate dev hub
             - name: "Authenticate Dev Hub"
-              run: sfdx auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a devhub -d
+              run: sfdx auth:sfdxurl:store -f ./TEST_URL.txt -a devhub -d
 
           # Remove auth file
             - name: "Remove auth file"
-              run: rm -f ./DEVHUB_SFDX_URL.txt
+              run: rm -f ./TEST_URL.txt
 
             # Create scratch org
             - name: 'Create scratch org'
